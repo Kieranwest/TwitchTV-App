@@ -9,5 +9,6 @@ namespace WindowsFormsApplication1
     class Variables
     {
         public string twitchURL;
+        public string access_token;
     }
 }
