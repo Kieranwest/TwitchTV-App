@@ -21,3 +21,13 @@ D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplic
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchApp.csproj.GenerateResource.Cache
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.exe
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.pdb
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.exe.config
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.exe
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.pdb
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\TwitchApp.csprojResolveAssemblyReference.cache
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.MainForm.resources
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.WebForm.resources
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\TwitchApp.csproj.GenerateResource.Cache
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.exe
+E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.pdb
