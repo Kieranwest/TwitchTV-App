@@ -11,16 +11,11 @@ c:\users\administrator\documents\visual studio 2015\Projects\WindowsFormsApplica
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\TwitchApp\TwitchApp\bin\Debug\WindowsFormsApplication1.exe.config
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\TwitchApp\TwitchApp\obj\Debug\WindowsFormsApplication1.exe
 C:\Users\Administrator\Documents\Visual Studio 2015\Projects\TwitchApp\TwitchApp\obj\Debug\WindowsFormsApplication1.pdb
-D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.exe.config
-D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.exe
-D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.pdb
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchApp.csprojResolveAssemblyReference.cache
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.MainForm.resources
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.WebForm.resources
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchApp.csproj.GenerateResource.Cache
-D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.exe
-D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.pdb
 E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.exe.config
 E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.exe
 E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\bin\Debug\WindowsFormsApplication1.pdb
@@ -33,3 +28,8 @@ E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsAppl
 E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.pdb
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\Newtonsoft.Json.dll
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\Newtonsoft.Json.xml
+D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\TwitchTV-App.exe.config
+D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\TwitchTV-App.exe
+D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\TwitchTV-App.pdb
+D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchTV-App.exe
+D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchTV-App.pdb

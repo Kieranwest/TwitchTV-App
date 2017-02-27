@@ -25,28 +25,37 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
             webClient = new WebClient();
-            Thread fetchTwitchUsernameThread = new Thread(new ThreadStart(fetchTwitchUsername));
-            fetchTwitchUsernameThread.Start();
+            variables.twitchLinked = false;
         }
 
         private void fetchTwitchUsername()
         {
-            webClientRunning = true;
-            while (webClientRunning)
+            if (variables.twitchLinked)
             {
-                if (variables.access_token == null)
+                webClientRunning = true;
+                while (webClientRunning)
                 {
-                    Console.WriteLine("Log In First");
-                    Thread.Sleep(5000);
-                }
-                else
-                {
-                    string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/user?oauth_token=" + variables.access_token);
-                    twitchUserAPI twitchUser = JsonConvert.DeserializeObject<twitchUserAPI>(jsonString);
+                    if (variables.access_token == null)
+                    {
+                        Console.WriteLine("Log In First");
+                        Thread.Sleep(5000);
+                    }
+                    else
+                    {
+                        string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/user?oauth_token=" + variables.access_token);
+                        twitchUserAPI twitchUser = JsonConvert.DeserializeObject<twitchUserAPI>(jsonString);
 
-                    variables.display_name = twitchUser.display_name;
-                    break;
+                        variables.display_name = twitchUser.display_name;
+                        MessageBox.Show("Twitch Username: " + variables.display_name);
+                        break;
+                        
+                        
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please Authenticate Your Twitch Account First");
             }
         }
 
@@ -57,9 +66,22 @@ namespace WindowsFormsApplication1
             
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(variables.display_name);
+            if(variables.display_name == null)
+            {
+                Thread fetchTwitchUsernameThread = new Thread(new ThreadStart(fetchTwitchUsername));
+                fetchTwitchUsernameThread.Start();
+            }else
+            {
+                MessageBox.Show("Twitch Username: " + variables.display_name);
+            }
+            
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
