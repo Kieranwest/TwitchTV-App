@@ -25,7 +25,7 @@ namespace WindowsFormsApplication1
         {
             variables.twitchURL = webBrowser2.Url.Fragment;
             variables.access_token = variables.twitchURL.Split('=', '&')[1];
-            MessageBox.Show(variables.access_token);
+            Console.WriteLine(variables.access_token);
             this.Close();
         }
     }

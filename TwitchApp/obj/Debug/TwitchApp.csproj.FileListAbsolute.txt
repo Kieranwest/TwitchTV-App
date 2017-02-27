@@ -31,3 +31,5 @@ E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsAppl
 E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\TwitchApp.csproj.GenerateResource.Cache
 E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.exe
 E:\Projects\Misc\Visual Studio\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.pdb
+D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\Newtonsoft.Json.dll
+D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\Newtonsoft.Json.xml

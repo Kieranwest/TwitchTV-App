@@ -48,7 +48,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(260, 51);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Check URL";
+            this.button2.Text = "Fetch Twitch Username (Login First)";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
