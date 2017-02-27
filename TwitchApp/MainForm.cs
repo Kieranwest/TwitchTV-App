@@ -13,7 +13,7 @@ namespace WindowsFormsApplication1
     public partial class MainForm : Form
     {
 
-        Variables variables = new Variables();
+        Variables variables = Program.Variables;
 
         public MainForm()
         {
@@ -29,7 +29,7 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-           Console.WriteLine(variables.access_token);
+           MessageBox.Show(variables.access_token);
         }
     }
 }

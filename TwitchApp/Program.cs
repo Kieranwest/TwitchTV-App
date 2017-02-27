@@ -8,6 +8,7 @@ namespace WindowsFormsApplication1
 {
     static class Program
     {
+        public static Variables Variables;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,6 +17,7 @@ namespace WindowsFormsApplication1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Variables = new Variables();
             Application.Run(new MainForm());
         }
     }
