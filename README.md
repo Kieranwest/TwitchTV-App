@@ -4,4 +4,4 @@ My idea is to have this application hook into running processes and compare them
 Twitch account will be updated to match the game using the [Twitch API.](https://dev.twitch.tv/)
 
 ## Status
-It doesn't fucking work
+It's moderately stable with its lack of features. 
