@@ -18,6 +18,7 @@ namespace WindowsFormsApplication1
         public WebForm()
         {
             InitializeComponent();
+            webBrowser2.ScriptErrorsSuppressed = true;
             webBrowser2.Navigate("https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=n34bthzktntu43c8fskvfl3hdt4adp&redirect_uri=http://localhost&scope=channel_editor+user_read&state=abc123");
         }
 

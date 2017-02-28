@@ -5,6 +5,7 @@
         public bool twitchLinked;
         public string twitchURL;
         public string access_token;
-        public string display_name { get; set; }
+        public string status;
+        public string display_name;
     }
 }

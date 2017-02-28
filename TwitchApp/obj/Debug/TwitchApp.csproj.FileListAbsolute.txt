@@ -33,3 +33,15 @@ D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\TwitchTV-App.exe
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\TwitchTV-App.pdb
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchTV-App.exe
 D:\Libaries\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchTV-App.pdb
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\TwitchTV-App.exe.config
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchTV-App.exe
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchTV-App.pdb
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\TwitchTV-App.exe
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\TwitchTV-App.pdb
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchApp.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.MainForm.resources
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\WindowsFormsApplication1.WebForm.resources
+C:\Users\Administrator\Documents\GitHub\TwitchTV-App\TwitchApp\obj\Debug\TwitchApp.csproj.GenerateResource.Cache

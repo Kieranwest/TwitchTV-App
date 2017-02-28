@@ -28,34 +28,44 @@ namespace WindowsFormsApplication1
             variables.twitchLinked = false;
         }
 
+        public void fetchTwitchData()
+        {
+            Console.WriteLine("Fetching Twitch Data...");
+            fetchTwitchUsername();
+            fetchTwitchStatus();
+        }
+
         private void fetchTwitchUsername()
         {
-            if (variables.twitchLinked)
+            webClientRunning = true;
+            while (webClientRunning)
             {
-                webClientRunning = true;
-                while (webClientRunning)
-                {
-                    if (variables.access_token == null)
-                    {
-                        Console.WriteLine("Log In First");
-                        Thread.Sleep(5000);
-                    }
-                    else
-                    {
-                        string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/user?oauth_token=" + variables.access_token);
-                        twitchUserAPI twitchUser = JsonConvert.DeserializeObject<twitchUserAPI>(jsonString);
+                Console.WriteLine("Fetching Twitch Username...");
+                string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/user?oauth_token=" + variables.access_token);
+                twitchUserAPI twitchUser = JsonConvert.DeserializeObject<twitchUserAPI>(jsonString);
 
-                        variables.display_name = twitchUser.display_name;
-                        MessageBox.Show("Twitch Username: " + variables.display_name);
-                        break;
-                        
-                        
-                    }
-                }
+                variables.display_name = twitchUser.display_name;
+                webClientRunning = false;
             }
-            else
+        }
+
+        private void fetchTwitchStatus()
+        {
+            webClientRunning = true;
+            while (webClientRunning)
             {
-                MessageBox.Show("Please Authenticate Your Twitch Account First");
+                if(variables.display_name == null)
+                {
+                    fetchTwitchUsername();
+                }
+                else
+                {
+                    Console.WriteLine("Fetching Twitch Stream Status...");
+                    string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
+                    twitchUsersAPI.Channel twitchUsers = JsonConvert.DeserializeObject<twitchUsersAPI.Channel>(jsonString);
+                    Console.WriteLine(jsonString);
+                    webClientRunning = false;
+                }
             }
         }
 
@@ -68,20 +78,38 @@ namespace WindowsFormsApplication1
 
         public void button2_Click(object sender, EventArgs e)
         {
-            if(variables.display_name == null)
+            if(variables.access_token == null)
             {
-                Thread fetchTwitchUsernameThread = new Thread(new ThreadStart(fetchTwitchUsername));
-                fetchTwitchUsernameThread.Start();
+                MessageBox.Show("Please Authenticate Your Twitch Account");
             }else
             {
-                MessageBox.Show("Twitch Username: " + variables.display_name);
+                fetchTwitchData();
             }
             
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            fetchTwitchStatus();
+        }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (variables.access_token == null)
+            {
+                MessageBox.Show("Please Authenticate Your Twitch Account First");
+            }
+            else
+            {
+                if (variables.status == null)
+                {
+                    MessageBox.Show("Twitch Channel Offline");
+                }
+                else
+                {
+                    MessageBox.Show("Twitch Title: " + variables.status);
+                }
+            }
         }
     }
 }

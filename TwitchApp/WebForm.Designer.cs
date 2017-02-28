@@ -59,6 +59,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.webBrowser2);
             this.Controls.Add(this.webBrowser1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "WebForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
