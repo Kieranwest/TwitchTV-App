@@ -38,7 +38,7 @@
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(529, 452);
+            this.webBrowser1.Size = new System.Drawing.Size(630, 567);
             this.webBrowser1.TabIndex = 0;
             // 
             // webBrowser2
@@ -47,7 +47,7 @@
             this.webBrowser2.Location = new System.Drawing.Point(0, 0);
             this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.Size = new System.Drawing.Size(529, 452);
+            this.webBrowser2.Size = new System.Drawing.Size(630, 567);
             this.webBrowser2.TabIndex = 1;
             this.webBrowser2.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser2_DocumentCompleted);
             // 
@@ -55,7 +55,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(529, 452);
+            this.ClientSize = new System.Drawing.Size(630, 567);
             this.ControlBox = false;
             this.Controls.Add(this.webBrowser2);
             this.Controls.Add(this.webBrowser1);

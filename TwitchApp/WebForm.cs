@@ -15,24 +15,34 @@ namespace WindowsFormsApplication1
     {
         Variables variables = Program.Variables;
         MainForm mainForm = new MainForm();
+        bool gotAuth = false;
 
         public WebForm()
         {
             InitializeComponent();
             webBrowser2.ScriptErrorsSuppressed = true;
-            webBrowser2.Navigate("https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=n34bthzktntu43c8fskvfl3hdt4adp&redirect_uri=http://localhost&scope=channel_editor+user_read&state=abc123");
+            Uri twitchAuthURL = new Uri("https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=n34bthzktntu43c8fskvfl3hdt4adp&redirect_uri=http://localhost&scope=channel_editor+user_read&state=abc123");
+            webBrowser2.Navigate(twitchAuthURL);
         }
 
         private void webBrowser2_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            variables.twitchURL = webBrowser2.Url.Fragment;
-            variables.access_token = variables.twitchURL.Split('=', '&')[1];
-            Console.WriteLine("Access Token: " + variables.access_token);
-            variables.twitchLinked = true;
-            Thread fetchTwitchData = new Thread(new ThreadStart(mainForm.fetchTwitchData));
-            fetchTwitchData.IsBackground = true;
-            fetchTwitchData.Start();
-            this.Close();
+
+            if(webBrowser2.Url.Host != "localhost")
+            {
+                Console.WriteLine("WebForm: Not there yet.");
+            }
+            else
+            {
+                variables.twitchURL = webBrowser2.Url.Fragment;
+                variables.access_token = variables.twitchURL.Split('=', '&')[1];
+                Console.WriteLine("Access Token: " + variables.access_token);
+                variables.twitchLinked = true;
+                Thread fetchTwitchData = new Thread(new ThreadStart(mainForm.fetchTwitchData));
+                fetchTwitchData.IsBackground = true;
+                fetchTwitchData.Start();
+                this.Close();
+            }
         }
     }
 }

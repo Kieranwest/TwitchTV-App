@@ -33,6 +33,7 @@ namespace WindowsFormsApplication1
             while(true)
             {
                 Console.WriteLine("Fetching Twitch Data...");
+
                 //Fetch Twitch Username
                 variables.display_name = fetchTwitchUsername();
                 Console.WriteLine("Twitch Username: " + variables.display_name);
@@ -43,9 +44,12 @@ namespace WindowsFormsApplication1
 
                 //Fetch Twitch Followers
                 variables.followers = fetchTwitchFollowers();
-                Console.WriteLine("Twitch Followers: " + variables.followers);
+                Console.WriteLine("Followers: ");
 
-                Thread.Sleep(10000);
+                labelFollowers.Invoke((MethodInvoker)(() => labelFollowers.Text = "Followers: " + variables.followers.ToString()));
+
+                Thread.Sleep(5000);
+
             }
         }
 
@@ -54,7 +58,6 @@ namespace WindowsFormsApplication1
             webClientRunning = true;
             while (webClientRunning)
             {
-                Console.WriteLine("Fetching Twitch Username...");
                 string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/user?oauth_token=" + variables.access_token);
                 twitchUserAPIClass twitchUserAPI = JsonConvert.DeserializeObject<twitchUserAPIClass>(jsonString);
                 webClientRunning = false;
@@ -99,7 +102,7 @@ namespace WindowsFormsApplication1
                 }
                 else
                 {
-                    Console.WriteLine(twitchUsersAPI.stream.channel.followers);
+                    return twitchUsersAPI.stream.channel.followers;
                 }
             }
             return 0;
@@ -109,6 +112,16 @@ namespace WindowsFormsApplication1
         {
             WebForm webForm = new WebForm();
             webForm.Show();
+        }
+
+        private void updateLabel_Click(object sender, EventArgs e)
+        {
+            labelFollowers.Text = "Followers: " + variables.followers.ToString();
+        }
+
+        public void changeFollowersLabel()
+        {
+            
         }
 
     }
