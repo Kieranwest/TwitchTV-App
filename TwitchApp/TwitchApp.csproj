@@ -50,8 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="twitchUserAPI.cs" />
-    <Compile Include="twitchUsersAPI.cs" />
+    <Compile Include="twitchUserAPIClass.cs" />
+    <Compile Include="twitchUsersAPIClass.cs" />
     <Compile Include="Variables.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

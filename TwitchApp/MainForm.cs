@@ -30,86 +30,86 @@ namespace WindowsFormsApplication1
 
         public void fetchTwitchData()
         {
-            Console.WriteLine("Fetching Twitch Data...");
-            fetchTwitchUsername();
-            fetchTwitchStatus();
+            while(true)
+            {
+                Console.WriteLine("Fetching Twitch Data...");
+                //Fetch Twitch Username
+                variables.display_name = fetchTwitchUsername();
+                Console.WriteLine("Twitch Username: " + variables.display_name);
+
+                //Fetch Twitch Stream Status
+                variables.status = fetchTwitchStatus();
+                Console.WriteLine("Twitch Stream Status: " + variables.status);
+
+                //Fetch Twitch Followers
+                variables.followers = fetchTwitchFollowers();
+                Console.WriteLine("Twitch Followers: " + variables.followers);
+
+                Thread.Sleep(10000);
+            }
         }
 
-        private void fetchTwitchUsername()
+        private string fetchTwitchUsername()
         {
             webClientRunning = true;
             while (webClientRunning)
             {
                 Console.WriteLine("Fetching Twitch Username...");
                 string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/user?oauth_token=" + variables.access_token);
-                twitchUserAPI twitchUser = JsonConvert.DeserializeObject<twitchUserAPI>(jsonString);
-
-                variables.display_name = twitchUser.display_name;
+                twitchUserAPIClass twitchUserAPI = JsonConvert.DeserializeObject<twitchUserAPIClass>(jsonString);
                 webClientRunning = false;
+                return twitchUserAPI.display_name;
             }
+            return null;
         }
 
-        private void fetchTwitchStatus()
+        private string fetchTwitchStatus()
         {
             webClientRunning = true;
             while (webClientRunning)
             {
-                if(variables.display_name == null)
+                    string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
+                    twitchUsersAPIClass twitchUsersAPI = JsonConvert.DeserializeObject<twitchUsersAPIClass>(jsonString);
+
+                    if(twitchUsersAPI.stream == null)
+                    {
+                    webClientRunning = false;
+                    return "Offline";
+                    }
+                    else
+                    {
+                    webClientRunning = false;
+                    return "Online";
+                    }
+                }
+            return null;
+        }
+
+        private int fetchTwitchFollowers()
+        {
+            webClientRunning = true;
+            while (webClientRunning)
+            {
+                string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
+                twitchUsersAPIClass twitchUsersAPI = JsonConvert.DeserializeObject<twitchUsersAPIClass>(jsonString);
+                
+                if(variables.status == "Offline")
                 {
-                    fetchTwitchUsername();
+                    return 0;
                 }
                 else
                 {
-                    Console.WriteLine("Fetching Twitch Stream Status...");
-                    string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
-                    twitchUsersAPI.Channel twitchUsers = JsonConvert.DeserializeObject<twitchUsersAPI.Channel>(jsonString);
-                    Console.WriteLine(jsonString);
-                    webClientRunning = false;
+                    Console.WriteLine(twitchUsersAPI.stream.channel.followers);
                 }
             }
+            return 0;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void twitchLogin_Click(object sender, EventArgs e)
         {
             WebForm webForm = new WebForm();
             webForm.Show();
-            
         }
 
-        public void button2_Click(object sender, EventArgs e)
-        {
-            if(variables.access_token == null)
-            {
-                MessageBox.Show("Please Authenticate Your Twitch Account");
-            }else
-            {
-                fetchTwitchData();
-            }
-            
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            fetchTwitchStatus();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            if (variables.access_token == null)
-            {
-                MessageBox.Show("Please Authenticate Your Twitch Account First");
-            }
-            else
-            {
-                if (variables.status == null)
-                {
-                    MessageBox.Show("Twitch Channel Offline");
-                }
-                else
-                {
-                    MessageBox.Show("Twitch Title: " + variables.status);
-                }
-            }
-        }
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace WindowsFormsApplication1
 {
-    public class twitchUserAPI
+    public class twitchUserAPIClass
     {
         public string display_name;
 
-        public twitchUserAPI()
+        public twitchUserAPIClass()
         {
         }
     }

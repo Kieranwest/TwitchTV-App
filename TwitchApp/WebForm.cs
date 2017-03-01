@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -28,6 +29,9 @@ namespace WindowsFormsApplication1
             variables.access_token = variables.twitchURL.Split('=', '&')[1];
             Console.WriteLine("Access Token: " + variables.access_token);
             variables.twitchLinked = true;
+            Thread fetchTwitchData = new Thread(new ThreadStart(mainForm.fetchTwitchData));
+            fetchTwitchData.IsBackground = true;
+            fetchTwitchData.Start();
             this.Close();
         }
     }
