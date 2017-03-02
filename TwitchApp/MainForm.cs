@@ -59,7 +59,7 @@ namespace WindowsFormsApplication1
             while (webClientRunning)
             {
                 string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/user?oauth_token=" + variables.access_token);
-                twitchUserAPIClass twitchUserAPI = JsonConvert.DeserializeObject<twitchUserAPIClass>(jsonString);
+                dynamic twitchUserAPI = JsonConvert.DeserializeObject(jsonString);
                 webClientRunning = false;
                 return twitchUserAPI.display_name;
             }
@@ -72,7 +72,7 @@ namespace WindowsFormsApplication1
             while (webClientRunning)
             {
                     string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
-                    twitchUsersAPIClass twitchUsersAPI = JsonConvert.DeserializeObject<twitchUsersAPIClass>(jsonString);
+                    dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
 
                     if(twitchUsersAPI.stream == null)
                     {
@@ -94,7 +94,7 @@ namespace WindowsFormsApplication1
             while (webClientRunning)
             {
                 string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
-                twitchUsersAPIClass twitchUsersAPI = JsonConvert.DeserializeObject<twitchUsersAPIClass>(jsonString);
+                dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
                 
                 if(variables.status == "Offline")
                 {
@@ -110,8 +110,12 @@ namespace WindowsFormsApplication1
 
         private void twitchLogin_Click(object sender, EventArgs e)
         {
-            WebForm webForm = new WebForm();
-            webForm.Show();
+            WebForm webForm = new WebForm(this);
+            webForm.ShowDialog();
+            if (variables.twitchLinked)
+            {
+                twitchLogin.Enabled = false;
+            }
         }
 
         private void updateLabel_Click(object sender, EventArgs e)

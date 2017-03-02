@@ -14,11 +14,12 @@ namespace WindowsFormsApplication1
     public partial class WebForm : Form
     {
         Variables variables = Program.Variables;
-        MainForm mainForm = new MainForm();
+        MainForm mainForm;
         bool gotAuth = false;
 
-        public WebForm()
+        public WebForm(MainForm m)
         {
+            mainForm = m;
             InitializeComponent();
             webBrowser2.ScriptErrorsSuppressed = true;
             Uri twitchAuthURL = new Uri("https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=n34bthzktntu43c8fskvfl3hdt4adp&redirect_uri=http://localhost&scope=channel_editor+user_read&state=abc123");
@@ -41,7 +42,7 @@ namespace WindowsFormsApplication1
                 Thread fetchTwitchData = new Thread(new ThreadStart(mainForm.fetchTwitchData));
                 fetchTwitchData.IsBackground = true;
                 fetchTwitchData.Start();
-                this.Close();
+                Close();
             }
         }
     }
