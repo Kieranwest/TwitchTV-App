@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using System.Threading;
 using Newtonsoft.Json;
 
-namespace WindowsFormsApplication1
+namespace TwitchTV_App
 {
     public partial class MainForm : Form
     {
