@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace TwitchTV_App
 {
     partial class MainForm
     {
