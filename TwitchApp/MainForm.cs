@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Data.SQLite;
 
 namespace TwitchTV_App
 {
@@ -19,6 +21,7 @@ namespace TwitchTV_App
         Variables variables = Program.Variables;
 
         WebClient webClient;
+        SQLiteConnection m_dbConnection;
         bool webClientRunning;
 
         public MainForm()
@@ -26,6 +29,8 @@ namespace TwitchTV_App
             InitializeComponent();
             webClient = new WebClient();
             variables.twitchLinked = false;
+            variables.gameProcessFound = false;
+            m_dbConnection = new SQLiteConnection("Data Source=Games.sqlite;Version=3");
         }
 
         public void fetchTwitchData()
@@ -108,6 +113,43 @@ namespace TwitchTV_App
             return 0;
         }
 
+        private void fetchProcesses()
+        {
+            Process[] processList = Process.GetProcesses();
+
+            m_dbConnection.Open();
+            foreach (Process process in processList)
+            {
+                string processName = process.ProcessName;
+
+                string sql = "select * from games";
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    if (processName == reader["processName"].ToString())
+                    {
+                        variables.gameProcessFound = true;
+                        variables.gameProcessName = processName;
+                        variables.gameName = reader["gameName"].ToString();
+                        break;
+                    }
+                }
+            }
+
+            m_dbConnection.Close();
+
+            if(variables.gameProcessFound)
+            {
+                Console.WriteLine("Game: " + variables.gameName);
+            }
+            else
+            {
+                Console.WriteLine("No Game Process was found!");
+            }
+                
+        }
+
         private void twitchLogin_Click(object sender, EventArgs e)
         {
             WebForm webForm = new WebForm(this);
@@ -120,7 +162,7 @@ namespace TwitchTV_App
 
         private void updateLabel_Click(object sender, EventArgs e)
         {
-            labelFollowers.Text = "Followers: " + variables.followers.ToString();
+            fetchProcesses();
         }
 
         public void changeFollowersLabel()
