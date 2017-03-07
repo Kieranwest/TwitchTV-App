@@ -15,7 +15,6 @@ namespace TwitchTV_App
     {
         Variables variables = Program.Variables;
         MainForm mainForm;
-        bool gotAuth = false;
 
         public WebForm(MainForm m)
         {
