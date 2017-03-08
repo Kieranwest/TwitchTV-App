@@ -63,7 +63,8 @@
             this.MaximizeBox = false;
             this.Name = "WebForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "WebForm";
+            this.Text = "Sign Into Twitch";
+            this.Load += new System.EventHandler(this.WebForm_Load);
             this.ResumeLayout(false);
 
         }

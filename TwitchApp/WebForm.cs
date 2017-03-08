@@ -27,7 +27,7 @@ namespace TwitchTV_App
 
         private void webBrowser2_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-
+            this.Text = webBrowser2.DocumentTitle;
             if(webBrowser2.Url.Host != "localhost")
             {
                 Console.WriteLine("WebForm: Not there yet.");
@@ -43,6 +43,11 @@ namespace TwitchTV_App
                 fetchTwitchData.Start();
                 Close();
             }
+        }
+
+        private void WebForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

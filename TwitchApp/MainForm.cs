@@ -12,6 +12,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Data.SQLite;
+using RestSharp;
 
 namespace TwitchTV_App
 {
@@ -29,7 +30,6 @@ namespace TwitchTV_App
             InitializeComponent();
             webClient = new WebClient();
             variables.twitchLinked = false;
-            variables.gameProcessFound = false;
             m_dbConnection = new SQLiteConnection("Data Source=Games.sqlite;Version=3");
             //Download Games database
             webClient.DownloadFile("http://projects.kieranwest.me/TwitchTV-App/Games.sqlite", "Games.sqlite");
@@ -38,7 +38,7 @@ namespace TwitchTV_App
 
         public void fetchTwitchData()
         {
-            while(true)
+            while(variables.twitchLinked)
             {
                 Console.WriteLine("Fetching Twitch Data...");
 
@@ -52,11 +52,11 @@ namespace TwitchTV_App
 
                 //Fetch Twitch Followers
                 variables.followers = fetchTwitchFollowers();
-                Console.WriteLine("Followers: ");
 
-                labelFollowers.Invoke((MethodInvoker)(() => labelFollowers.Text = "Followers: " + variables.followers.ToString()));
-
-                Thread.Sleep(5000);
+                //Update Game Title
+                updateGameTitle();
+                labelCurrentGame.Invoke((MethodInvoker)(() => labelCurrentGame.Text = "Current Game: " + variables.gameName));
+                Thread.Sleep(30000);
 
             }
         }
@@ -132,7 +132,6 @@ namespace TwitchTV_App
                 {
                     if (processName == reader["processName"].ToString())
                     {
-                        variables.gameProcessFound = true;
                         variables.gameProcessName = processName;
                         variables.gameName = reader["gameName"].ToString();
                         break;
@@ -141,16 +140,6 @@ namespace TwitchTV_App
             }
 
             m_dbConnection.Close();
-
-            if(variables.gameProcessFound)
-            {
-                Console.WriteLine("Game: " + variables.gameName);
-            }
-            else
-            {
-                Console.WriteLine("No Game Process was found!");
-            }
-                
         }
 
         private void twitchLogin_Click(object sender, EventArgs e)
@@ -163,15 +152,28 @@ namespace TwitchTV_App
             }
         }
 
-        private void updateLabel_Click(object sender, EventArgs e)
+        private void updateGameTitle()
         {
-            fetchProcesses();
-        }
 
-        public void changeFollowersLabel()
-        {
+            if(variables.twitchLinked)
+            {
+                fetchProcesses();
+                var client = new RestClient("https://api.twitch.tv/kraken/channels/" + variables.display_name);
+                var request = new RestRequest(Method.PUT);
+                request.AddHeader("cache-control", "no-cache");
+                request.AddHeader("content-type", "application/json");
+                request.AddHeader("authorization", "OAuth " + variables.access_token);
+                request.AddHeader("accept", "application/vnd.twitchtv.v3+json");
+                request.AddParameter("application/json", "{\"channel\":{\"game\":\"" + variables.gameName + "\"}}",
+                    ParameterType.RequestBody);
+
+                IRestResponse response = client.Execute(request);
+            }
+            else
+            {
+                MessageBox.Show("Link Twitch Account");
+            }
             
         }
-
     }
 }

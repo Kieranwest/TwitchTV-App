@@ -3,9 +3,8 @@
     class Variables
     {
         public bool twitchLinked;
-        public bool gameProcessFound;
         public string gameProcessName;
-        public string gameName;
+        public string gameName = "";
         public string twitchURL;
         public string access_token;
         public string status;
