@@ -32,7 +32,7 @@ namespace TwitchTV_App
             variables.twitchLinked = false;
             m_dbConnection = new SQLiteConnection("Data Source=Games.sqlite;Version=3");
             //Download Games database
-            webClient.DownloadFile("http://projects.kieranwest.me/TwitchTV-App/Games.sqlite", "Games.sqlite");
+            webClient.DownloadFile("http://kieranwest.co.uk/projects/TwitchTV-App/Games.sqlite", "Games.sqlite");
             Console.WriteLine("Database Downloaded!");
         }
 
