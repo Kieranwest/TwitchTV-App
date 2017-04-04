@@ -10,5 +10,6 @@
         public string status;
         public string display_name;
         public int followers;
+		public int viewers;
     }
 }

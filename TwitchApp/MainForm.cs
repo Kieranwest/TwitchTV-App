@@ -50,12 +50,21 @@ namespace TwitchTV_App
                 variables.status = fetchTwitchStatus();
                 Console.WriteLine("Twitch Stream Status: " + variables.status);
 
-                //Fetch Twitch Followers
-                variables.followers = fetchTwitchFollowers();
+				//Update Game Title
+				updateGameTitle();
+				labelCurrentGame.Invoke((MethodInvoker)(() => labelCurrentGame.Text = "Current Game: " + variables.gameName));
+				Console.WriteLine("Current Game: " + variables.gameName);
 
-                //Update Game Title
-                updateGameTitle();
-                labelCurrentGame.Invoke((MethodInvoker)(() => labelCurrentGame.Text = "Current Game: " + variables.gameName));
+				//Fetch Twitch Followers
+				variables.followers = fetchTwitchFollowers();
+				labelFollowers.Invoke((MethodInvoker)(() => labelFollowers.Text = "Followers: " + variables.followers));
+				Console.WriteLine("Followers: " + variables.gameName);
+
+				//Fetch Stream Viewers
+				variables.viewers = fetchTwitchViewers();
+				labelViewers.Invoke((MethodInvoker)(() => labelViewers.Text = "Viewers: " + variables.viewers));
+				Console.WriteLine("Viewers: " + variables.viewers);
+				
                 Thread.Sleep(30000);
 
             }
@@ -116,6 +125,27 @@ namespace TwitchTV_App
             return 0;
         }
 
+		private int fetchTwitchViewers()
+		{
+			webClientRunning = true;
+			while (webClientRunning)
+			{
+				string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
+				dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
+
+				if (variables.status == "Offline")
+				{
+					return 0;
+				}
+				else
+				{
+					return twitchUsersAPI.stream.viewers;
+				}
+
+			}
+			return 0;
+		}
+
         private void fetchProcesses()
         {
             Process[] processList = Process.GetProcesses();
@@ -175,5 +205,10 @@ namespace TwitchTV_App
             }
             
         }
-    }
+
+		private void MainForm_Load(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
