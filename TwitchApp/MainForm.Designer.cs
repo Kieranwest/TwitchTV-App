@@ -78,6 +78,9 @@
             // 
             // twitchChat
             // 
+            this.twitchChat.BackColor = System.Drawing.SystemColors.Desktop;
+            this.twitchChat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.twitchChat.ForeColor = System.Drawing.SystemColors.Window;
             this.twitchChat.HideSelection = false;
             this.twitchChat.Location = new System.Drawing.Point(12, 129);
             this.twitchChat.Name = "twitchChat";
@@ -102,6 +105,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Westie1010\'s TwitchTV App";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

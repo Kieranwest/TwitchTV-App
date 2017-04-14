@@ -13,9 +13,8 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Data.SQLite;
 using RestSharp;
-using TwitchLib;
-using TwitchLib.Models.Client;
-using TwitchLib.Events.Client;
+using System.Net.Sockets;
+using System.IO;
 
 namespace TwitchTV_App
 {
@@ -24,7 +23,15 @@ namespace TwitchTV_App
 
         Variables variables = Program.Variables;
 
+        //IRC
+        #region
+        IrcClient irc = new IrcClient("irc.chat.twitch.tv", 6667, "justinfan13234452562626");
+        NetworkStream serverStream = default(NetworkStream);
+        string readData = "";
+        Thread chatThread;
+        #endregion
 
+        //Web Client
         WebClient webClient;
         SQLiteConnection m_dbConnection;
         bool webClientRunning;
@@ -34,9 +41,12 @@ namespace TwitchTV_App
             InitializeComponent();
             webClient = new WebClient();
             m_dbConnection = new SQLiteConnection("Data Source=Games.sqlite;Version=3");
+
             //Download Games database
             webClient.DownloadFile("http://kieranwest.co.uk/projects/TwitchTV-App/Games.sqlite", "Games.sqlite");
             Console.WriteLine("Database Downloaded!");
+
+            twitchChat.Text = "Twitch Chat" + Environment.NewLine;
         }
 
         public void fetchTwitchData()
@@ -69,8 +79,7 @@ namespace TwitchTV_App
                 Console.WriteLine("Viewers: " + variables.viewers);
 
                 //Initiate Twitch Chat
-                setupTwitchChat();
-
+                joinTwitchChat();
                 //string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
                 //dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
                 //Console.WriteLine(jsonString);
@@ -238,15 +247,58 @@ namespace TwitchTV_App
             
         }
 
-        private void setupTwitchChat()
+        private void joinTwitchChat()
         {
-            if(!variables.chatStarted)
+            if (!variables.chatStarted)
             {
-                //Connect to Twitch IRC
+                irc.joinRoom(variables.display_name.ToLower());
+                chatThread = new Thread(getMessage);
+                chatThread.IsBackground = true;
+                chatThread.Start();
+                variables.chatStarted = true;
+            }
 
-            }else
+        }
+
+        private void getMessage()
+        {
+            serverStream =  irc.tcpClient.GetStream();
+            int buffSize = 0;
+            byte[] inStream = new byte[10025];
+            buffSize = irc.tcpClient.ReceiveBufferSize;
+            while(variables.twitchLinked)
             {
-                //Skip This Event
+                try
+                {
+                    readData = irc.readMessage();
+                    msg();
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+        }
+
+        //Chat Processing
+        private void msg()
+        {
+            if(this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(msg));
+            }
+            else
+            {
+                string[] seperator = new string[] { "#" + variables.display_name.ToLower() + " :" };
+                string[] singlesep = new string[] { ":" , "!"};
+
+                if(readData.Contains("PRIVMSG"))
+                {
+                    string username = readData.Split(singlesep, StringSplitOptions.None)[1];
+                    string message = readData.Split(seperator, StringSplitOptions.None)[1];
+
+                    twitchChat.AppendText(username + ": " + message + Environment.NewLine);
+                }
             }
         }
 
@@ -254,5 +306,81 @@ namespace TwitchTV_App
 		{
 
 		}
-	}
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(variables.chatStarted)
+            {
+                irc.leaveRoom();
+                serverStream.Dispose();
+                Environment.Exit(0);
+            }
+            else
+            {
+                irc.leaveRoom();
+            }
+        }
+    }
+
+    class IrcClient
+    {
+        Variables variables = Program.Variables;
+
+        private string username;
+        private string channel;
+
+        public TcpClient tcpClient;
+        private StreamReader inputStream;
+        private StreamWriter outputStream;
+
+        public IrcClient(string ip, int port, string username)
+        {
+            tcpClient = new TcpClient(ip, port);
+            inputStream = new StreamReader(tcpClient.GetStream());
+            outputStream = new StreamWriter(tcpClient.GetStream());
+
+            //outputStream.WriteLine("PASS " + password);
+            outputStream.WriteLine("NICK " + username);
+            outputStream.WriteLine("USER " + username + " 8 * :" + username);
+            outputStream.WriteLine("CAP REQ :twitch.tv/membership");
+            outputStream.WriteLine("CAP REQ :twitch.tv/commands");
+            outputStream.Flush();
+        }
+
+        public void joinRoom(string channel)
+        {
+            this.channel = channel;
+            outputStream.WriteLine("JOIN #" + channel);
+            outputStream.Flush();
+        }
+
+        public void leaveRoom()
+        {
+            outputStream.Close();
+            inputStream.Close();
+        }
+
+        public void sendIrcMessage(string message)
+        {
+            outputStream.Write(message);
+            outputStream.Flush();
+        }
+
+        public void sendChatMessage(string message)
+        {
+            sendIrcMessage(":" + variables.display_name.ToLower() + "!" + variables.display_name.ToLower() + "@" + variables.display_name.ToLower() + ".tmi.twitch.tv PRIVMSG #" + channel + " :" + message);
+        }
+
+        public void pingResponse()
+        {
+            sendIrcMessage("PONG tmi.twitch.tv\r\n");
+        }
+
+        public string readMessage()
+        {
+            string message = "";
+            message = inputStream.ReadLine();
+            return message;
+        }
+    }
 }
