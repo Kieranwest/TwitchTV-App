@@ -21,7 +21,7 @@ namespace TwitchTV_App
             mainForm = m;
             InitializeComponent();
             webBrowser2.ScriptErrorsSuppressed = true;
-            Uri twitchAuthURL = new Uri("https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=n34bthzktntu43c8fskvfl3hdt4adp&redirect_uri=http://localhost&scope=channel_editor+user_read&state=abc123");
+            Uri twitchAuthURL = new Uri("https://api.twitch.tv/kraken/oauth2/authorize?response_type=token&client_id=n34bthzktntu43c8fskvfl3hdt4adp&redirect_uri=http://localhost&scope=channel_editor+user_read+chat_login&state=abc123");
             webBrowser2.Navigate(twitchAuthURL);
         }
 

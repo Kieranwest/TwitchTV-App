@@ -2,7 +2,8 @@
 {
     class Variables
     {
-        public bool twitchLinked;
+        public bool twitchLinked = false;
+        public bool chatStarted = false;
         public string gameProcessName;
         public string gameName = "";
         public string twitchURL;

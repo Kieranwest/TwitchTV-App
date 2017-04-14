@@ -13,6 +13,9 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Data.SQLite;
 using RestSharp;
+using TwitchLib;
+using TwitchLib.Models.Client;
+using TwitchLib.Events.Client;
 
 namespace TwitchTV_App
 {
@@ -20,6 +23,7 @@ namespace TwitchTV_App
     {
 
         Variables variables = Program.Variables;
+
 
         WebClient webClient;
         SQLiteConnection m_dbConnection;
@@ -29,7 +33,6 @@ namespace TwitchTV_App
         {
             InitializeComponent();
             webClient = new WebClient();
-            variables.twitchLinked = false;
             m_dbConnection = new SQLiteConnection("Data Source=Games.sqlite;Version=3");
             //Download Games database
             webClient.DownloadFile("http://kieranwest.co.uk/projects/TwitchTV-App/Games.sqlite", "Games.sqlite");
@@ -58,13 +61,21 @@ namespace TwitchTV_App
 				//Fetch Twitch Followers
 				variables.followers = fetchTwitchFollowers();
 				labelFollowers.Invoke((MethodInvoker)(() => labelFollowers.Text = "Followers: " + variables.followers));
-				Console.WriteLine("Followers: " + variables.gameName);
+				Console.WriteLine("Followers: " + variables.followers);
 
-				//Fetch Stream Viewers
-				variables.viewers = fetchTwitchViewers();
-				labelViewers.Invoke((MethodInvoker)(() => labelViewers.Text = "Viewers: " + variables.viewers));
-				Console.WriteLine("Viewers: " + variables.viewers);
-				
+                //Fetch Stream Viewers
+                variables.viewers = fetchTwitchViewers();
+                labelViewers.Invoke((MethodInvoker)(() => labelViewers.Text = "Viewers: " + variables.viewers));
+                Console.WriteLine("Viewers: " + variables.viewers);
+
+                //Initiate Twitch Chat
+                setupTwitchChat();
+
+                //string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
+                //dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
+                //Console.WriteLine(jsonString);
+
+                //Refresh Every 30 Seconds
                 Thread.Sleep(30000);
 
             }
@@ -125,26 +136,47 @@ namespace TwitchTV_App
             return 0;
         }
 
-		private int fetchTwitchViewers()
-		{
-			webClientRunning = true;
-			while (webClientRunning)
-			{
-				string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
-				dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
+        private string fetchTwitchAPIData()
+        {
+            webClientRunning = true;
+            while (webClientRunning)
+            {
+                string jsonstring = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
+                dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonstring);
 
-				if (variables.status == "Offline")
-				{
-					return 0;
-				}
-				else
-				{
-					return twitchUsersAPI.stream.viewers;
-				}
+                if (variables.status == "Offline")
+                {
+                    return "null";
+                }
+                else
+                {
+                    return jsonstring;
+                }
 
-			}
-			return 0;
-		}
+            }
+            return "null";
+        }
+
+        private int fetchTwitchViewers()
+        {
+            webClientRunning = true;
+            while (webClientRunning)
+            {
+                string jsonstring = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
+                dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonstring);
+
+                if (variables.status == "Offline")
+                {
+                    return 0;
+                }
+                else
+                {
+                    return twitchUsersAPI.stream.viewers;
+                }
+
+            }
+            return 0;
+        }
 
         private void fetchProcesses()
         {
@@ -206,7 +238,19 @@ namespace TwitchTV_App
             
         }
 
-		private void MainForm_Load(object sender, EventArgs e)
+        private void setupTwitchChat()
+        {
+            if(!variables.chatStarted)
+            {
+                //Connect to Twitch IRC
+
+            }else
+            {
+                //Skip This Event
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
 		{
 
 		}
