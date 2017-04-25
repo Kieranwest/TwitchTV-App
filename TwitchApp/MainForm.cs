@@ -43,7 +43,7 @@ namespace TwitchTV_App
             m_dbConnection = new SQLiteConnection("Data Source=Games.sqlite;Version=3");
 
             //Download Games database
-            webClient.DownloadFile("http://kieranwest.co.uk/projects/TwitchTV-App/Games.sqlite", "Games.sqlite");
+            webClient.DownloadFile("http://cdn.kieranwest.co.uk/programs/TwitchTV-App/Games.sqlite", "Games.sqlite");
             Console.WriteLine("Database Downloaded!");
 
             twitchChat.Text = "Twitch Chat" + Environment.NewLine;
@@ -132,7 +132,7 @@ namespace TwitchTV_App
             {
                 string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
                 dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
-                
+
                 if(variables.status == "Offline")
                 {
                     return 0;
@@ -244,7 +244,7 @@ namespace TwitchTV_App
             {
                 MessageBox.Show("Link Twitch Account");
             }
-            
+
         }
 
         private void joinTwitchChat()
