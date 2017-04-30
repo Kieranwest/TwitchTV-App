@@ -79,7 +79,11 @@ namespace TwitchTV_App
                 Console.WriteLine("Viewers: " + variables.viewers);
 
                 //Initiate Twitch Chat
-                joinTwitchChat();
+                if(variables.chatStarted == false)
+                {
+                    joinTwitchChat();
+                }
+                
                 //string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
                 //dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
                 //Console.WriteLine(jsonString);
@@ -249,15 +253,11 @@ namespace TwitchTV_App
 
         private void joinTwitchChat()
         {
-            if (!variables.chatStarted)
-            {
-                irc.joinRoom(variables.display_name.ToLower());
-                chatThread = new Thread(getMessage);
-                chatThread.IsBackground = true;
-                chatThread.Start();
-                variables.chatStarted = true;
-            }
-
+            irc.joinRoom(variables.display_name.ToLower());
+            chatThread = new Thread(getMessage);
+            chatThread.IsBackground = true;
+            chatThread.Start();
+            variables.chatStarted = true;
         }
 
         private void getMessage()
