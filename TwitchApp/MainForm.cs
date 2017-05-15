@@ -52,6 +52,7 @@ namespace TwitchTV_App
         public void fetchTwitchData()
         {
           //Testing previous dates
+          //and this one
             while(variables.twitchLinked)
             {
                 Console.WriteLine("Fetching Twitch Data...");
