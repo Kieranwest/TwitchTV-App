@@ -51,6 +51,7 @@ namespace TwitchTV_App
 
         public void fetchTwitchData()
         {
+          //Testing previous dates
             while(variables.twitchLinked)
             {
                 Console.WriteLine("Fetching Twitch Data...");
@@ -83,7 +84,7 @@ namespace TwitchTV_App
                 {
                     joinTwitchChat();
                 }
-                
+
                 //string jsonString = webClient.DownloadString("https://api.twitch.tv/kraken/streams/" + variables.display_name + "?oauth_token=" + variables.access_token);
                 //dynamic twitchUsersAPI = JsonConvert.DeserializeObject(jsonString);
                 //Console.WriteLine(jsonString);
