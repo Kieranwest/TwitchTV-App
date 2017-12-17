@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -36,6 +37,10 @@ namespace TwitchTV_App
             {
                 variables.twitchURL = webBrowser2.Url.Fragment;
                 variables.access_token = variables.twitchURL.Split('=', '&')[1];
+
+                //Create credentials file
+                File.WriteAllText("credentials.txt", variables.access_token);
+
                 Console.WriteLine("Access Token: " + variables.access_token);
                 variables.twitchLinked = true;
                 Thread fetchTwitchData = new Thread(new ThreadStart(mainForm.fetchTwitchData));

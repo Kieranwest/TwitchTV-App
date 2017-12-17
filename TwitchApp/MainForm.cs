@@ -43,10 +43,36 @@ namespace TwitchTV_App
             m_dbConnection = new SQLiteConnection("Data Source=Games.sqlite;Version=3");
 
             //Download Games database
-            webClient.DownloadFile("http://cdn.kieranwest.co.uk/programs/TwitchTV-App/Games.sqlite", "Games.sqlite");
+            webClient.DownloadFile("https://github.com/Kieranwest/TwitchTV-App/raw/master/Games.sqlite", "Games.sqlite");
             Console.WriteLine("Database Downloaded!");
 
             twitchChat.Text = "Twitch Chat" + Environment.NewLine;
+
+            //Check for previous login. 
+            if(File.Exists("credentials.txt"))
+            {
+                Console.WriteLine("Found previous credentials.");
+                //Set required variables. 
+                try
+                {
+                    StreamReader reader = new StreamReader("credentials.txt");
+                    string access_token = reader.ReadToEnd();
+                    variables.access_token = access_token;
+                    variables.twitchLinked = true;
+                    twitchLogin.Enabled = false;
+                    Thread fetchTwitchData = new Thread(new ThreadStart(this.fetchTwitchData));
+                    fetchTwitchData.Start();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No previous credentials found.");
+            }
+
         }
 
         public void fetchTwitchData()
@@ -201,7 +227,6 @@ namespace TwitchTV_App
             foreach (Process process in processList)
             {
                 string processName = process.ProcessName;
-
                 string sql = "select * from games";
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
