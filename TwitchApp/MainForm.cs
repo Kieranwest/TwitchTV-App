@@ -228,14 +228,15 @@ namespace TwitchTV_App
             {
                 string processName = process.ProcessName;
                 string sql = "select * from games";
+                Console.WriteLine(processName.ToLower());
                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    if (processName == reader["processName"].ToString())
+                    if (processName == reader["processName"].ToString().ToLower())
                     {
                         variables.gameProcessName = processName;
-                        variables.gameName = reader["gameName"].ToString();
+                        variables.gameName = reader["gameName"].ToString().ToLower();
                         break;
                     }
                 }
